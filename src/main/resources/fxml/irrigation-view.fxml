@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="de.smartolive.irrigation.ui.controller.IrrigationController"
+      alignment="CENTER" spacing="30" style="-fx-padding: 50;"
+      styleClass="root">
+
+    <!-- KORREKTE CSS-Einbindung (seit JavaFX 9+) -->
+    <stylesheets>
+        <String fx:value="/css/application.css"/>
+    </stylesheets>
+
+    <!-- Titel -->
+    <Label text="Smart Olive Irrigation" styleClass="title-label"/>
+
+    <Separator prefWidth="700"/>
+
+    <!-- Status -->
+    <Label fx:id="statusLabel" text="System bereit" styleClass="status-label"/>
+
+    <!-- Button-Bar -->
+    <HBox spacing="20" alignment="CENTER">
+        <Button fx:id="startButton"
+                text="Bewässerung STARTEN"
+                onAction="#onStartClicked"
+                styleClass="button start-button"/>
+
+        <Button fx:id="stopButton"
+                text="Bewässerung STOPPEN"
+                onAction="#onStopClicked"
+                styleClass="button stop-button"
+                disable="true"/>
+
+        <Button fx:id="refreshButton"
+                text="Aktualisieren"
+                onAction="#onRefreshClicked"
+                styleClass="button refresh-button"/>
+
+        <Button text="Einstellungen"
+                onAction="#onSettingsClicked"
+                styleClass="button settings-button"/>
+    </HBox>
+
+    <!-- Progress-Container -->
+    <VBox fx:id="progressContainer" visible="false" spacing="10" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+        <ProgressBar fx:id="progressBar" prefWidth="500" progress="0.0"/>
+        <Label fx:id="progressLabel" text="" style="-fx-font-size: 14px;"/>
+    </VBox>
+
+</VBox>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="de.smartolive.irrigation.ui.controller.MainViewController"
+      spacing="20" alignment="TOP_CENTER" style="-fx-background-color: #f8fafc;">
+
+    <padding>
+        <Insets top="30" right="40" bottom="30" left="40"/>
+    </padding>
+
+    <!-- Titel -->
+    <Label text="Smart Olive Irrigation" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: #1e40af;"/>
+
+    <Separator prefWidth="800"/>
+
+    <!-- Toolbar -->
+    <HBox spacing="15" alignment="CENTER_LEFT">
+        <Button text="Neue Parzelle anlegen" onAction="#onCreateParzelle" style="-fx-font-size: 14px;"/>
+        <Button text="Aktualisieren" onAction="#onRefresh" style="-fx-font-size: 14px;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Status:" style="-fx-font-weight: bold;"/>
+        <Label fx:id="statusLabel" text="System bereit" style="-fx-text-fill: green; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <Separator prefWidth="800"/>
+
+    <!-- Parzellen-Übersicht -->
+    <VBox spacing="15" alignment="TOP_CENTER">
+        <Label text="Meine Olivenparzellen" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+        <TableView fx:id="parzellenTable" prefHeight="400" prefWidth="1000">
+            <columns>
+                <TableColumn text="ID" prefWidth="80">
+                    <cellValueFactory><property value="idProperty"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Name" prefWidth="250">
+                    <cellValueFactory><property value="nameProperty"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Sorte" prefWidth="150">
+                    <cellValueFactory><property value="sorteProperty"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Aktuelle Feuchte" prefWidth="150">
+                    <cellValueFactory><property value="currentMoistureProperty"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Status" prefWidth="150">
+                    <cellValueFactory><property value="statusProperty"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="Aktionen" prefWidth="220">
+                    <!-- Hier später Buttons pro Zeile (Edit, Manuell bewässern, Details) -->
+                    <cellValueFactory><property value="actionsProperty"/></cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+
+        <Label fx:id="noDataLabel" text="Noch keine Parzellen angelegt." visible="false" style="-fx-font-style: italic;"/>
+    </VBox>
+
+    <!-- Footer -->
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="© 2025 Smart Olive Irrigation" style="-fx-font-size: 12px; -fx-text-fill: #64748b;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Letzte Aktualisierung:" style="-fx-font-size: 12px;"/>
+        <Label fx:id="lastUpdateLabel" text="–" style="-fx-font-size: 12px;"/>
+    </HBox>
+</VBox>
