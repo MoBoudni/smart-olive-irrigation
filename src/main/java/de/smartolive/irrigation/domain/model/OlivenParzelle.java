@@ -3,6 +3,7 @@ package de.smartolive.irrigation.domain.model;
 import de.smartolive.irrigation.domain.exception.DomainException;
 import de.smartolive.irrigation.domain.valueobject.MoistureRange;
 import de.smartolive.irrigation.domain.valueobject.TimeWindow;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,14 +14,32 @@ import java.util.Objects;
  * Aggregate Root: Repräsentiert eine räumlich abgegrenzte Olivenparzelle
  * mit eigener Sensorik, Bewässerungslogik und Konfiguration.
  */
+@Entity
+@Table(name = "oliven_parzellen")
 public class OlivenParzelle {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @Embedded
     private OlivenbaumProfil profil;                    // Spezifische Olivenbaum-Eigenschaften
+
+    @Embedded
     private MoistureRange targetMoistureRange;          // Soll-Feuchtebereich (z. B. 30–60%)
-    private List<TimeWindow> allowedTimeWindows;        // Erlaubte Bewässerungszeiten
+
+    @ElementCollection
+    @CollectionTable(name = "time_windows")
     private int maxDailyDurationMinutes;                // Max. Bewässerungsdauer pro Tag
+
+    @ElementCollection
+    @CollectionTable(name = "time_windows", joinColumns = @JoinColumn(name = "parzelle_id"))
+    private List<TimeWindow> allowedTimeWindows;        // Erlaubte Bewässerungszeiten
+
+    @Enumerated(EnumType.STRING)
     private ParzellenStatus status;                     // RUHE, BEWAESSERUNG, FEHLER, GESPERRT etc.
 
     // Konstruktor für Factory-Methode (DDD-Best-Practice)
